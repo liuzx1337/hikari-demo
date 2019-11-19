@@ -1,0 +1,66 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.qishao.api.dao.primary.RuleSceneDao">
+    <!-- 通用查询映射结果 -->
+    <resultMap id="BaseResultMap" type="com.qishao.api.entity.BaseRuleSceneInfo">
+        <id column="SCENE_ID" property="sceneId"/>
+        <result column="SCENE_IDENTIFY" property="sceneIdentify"/>
+        <result column="SCENE_TYPE" property="sceneType"/>
+        <result column="SCENE_NAME" property="sceneName"/>
+        <result column="SCENE_DESC" property="sceneDesc"/>
+        <result column="SYSTEM_ID" property="systemId"/>
+        <result column="POINTS_ID" property="pointsId"/>
+        <result column="CALLBACK_INTERFACE" property="callbackInterface"/>
+        <result column="EFFECTIVE_TIME" property="effectiveTime"/>
+        <result column="IS_EFFECT" property="isEffect"/>
+        <result column="CRE_USER_ID" property="creUserId"/>
+        <result column="CRE_TIME" property="creTime"/>
+        <result column="MFI_USER_ID" property="mfiUserId"/>
+        <result column="MFI_TIME" property="mfiTime"/>
+        <result column="REMARK" property="remark"/>
+    </resultMap>
+
+    <insert id="insert" parameterType="com.qishao.api.entity.BaseRuleSceneInfo">
+        insert into rule_scene_info
+        <trim prefix="(" suffix=")" suffixOverrides=",">
+            <if test="sceneId != null">SCENE_ID,</if>
+            <if test="sceneIdentify != null">SCENE_IDENTIFY,</if>
+            <if test="sceneType != null">SCENE_TYPE,</if>
+            <if test="sceneName != null">SCENE_NAME,</if>
+            <if test="sceneDesc != null">SCENE_DESC,</if>
+            <if test="systemId != null">SYSTEM_ID,</if>
+            <if test="pointsId != null">POINTS_ID,</if>
+            <if test="callbackInterface != null">CALLBACK_INTERFACE,</if>
+            <if test="effectiveTime != null">EFFECTIVE_TIME,</if>
+            <if test="creUserId != null">CRE_USER_ID,</if>
+            <if test="mfiUserId != null">MFI_USER_ID,</if>
+            <if test="creTime != null">CRE_TIME,</if>
+            <if test="mfiTime != null">MFI_TIME,</if>
+            <if test="remark != null">REMARK,</if>
+            <if test="isEffect != null">IS_EFFECT,</if>
+        </trim>
+        <trim prefix="value(" suffix=")" suffixOverrides=",">
+            <if test="sceneId != null">#{sceneId},</if>
+            <if test="sceneIdentify != null">#{sceneIdentify},</if>
+            <if test="sceneType != null">#{sceneType},</if>
+            <if test="sceneName != null">#{sceneName},</if>
+            <if test="sceneDesc != null">#{sceneDesc},</if>
+            <if test="systemId != null">#{systemId},</if>
+            <if test="pointsId != null">#{pointsId},</if>
+            <if test="callbackInterface != null">#{callbackInterface},</if>
+            <if test="effectiveTime != null">#{effectiveTime},</if>
+            <if test="creUserId != null">#{creUserId},</if>
+            <if test="mfiUserId != null">#{mfiUserId},</if>
+            <if test="creTime != null">#{creTime},</if>
+            <if test="mfiTime != null">#{mfiTime},</if>
+            <if test="remark != null">#{remark},</if>
+            <if test="isEffect != null">#{isEffect},</if>
+        </trim>
+    </insert>
+
+    <select id="getOneById" resultMap="BaseResultMap">
+        select *
+        from rule_scene_info
+        where SCENE_ID = #{value}
+    </select>
+</mapper>
