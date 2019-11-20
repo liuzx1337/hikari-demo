@@ -12,6 +12,7 @@ import org.springframework.boot.context.properties.ConfigurationProperties;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.core.io.support.PathMatchingResourcePatternResolver;
+import org.springframework.jdbc.datasource.DataSourceTransactionManager;
 
 import javax.sql.DataSource;
 
@@ -22,18 +23,18 @@ import javax.sql.DataSource;
  * date 2019/11/19
  */
 @Configuration
-@MapperScan(basePackages = "com.qishao.api.dao.secondary", sqlSessionFactoryRef = "secondarySqlSessionFactory")
+@MapperScan(basePackages = "com.qishao.api.dao.secondary", sqlSessionTemplateRef = "secondarySqlSessionTemplate")
 @Slf4j
 public class DataSourceSecondaryConfig {
 
     /**
-     * 第一数据源配置
+     * 第二数据源配置
      */
     @Value("${mybatis.secondary.mapper-locations}")
     private String secondaryMapperLocationStr;
 
     /**
-     * 第一数据源对象
+     * 第二数据源对象
      * @return
      */
     @Bean
@@ -44,7 +45,7 @@ public class DataSourceSecondaryConfig {
 
     /**
      * SqlSessionFactory
-     * 对应第一数据源
+     * 对应第二数据源
      * @param dataSource
      * @return
      * @throws Exception
@@ -58,8 +59,19 @@ public class DataSourceSecondaryConfig {
     }
 
     /**
+     * 事务管理
+     * 对应第二数据源
+     * @param dataSource
+     * @return
+     */
+    @Bean
+    public DataSourceTransactionManager primaryTransactionManager(@Qualifier("secondaryDataSource") DataSource dataSource) {
+        return new DataSourceTransactionManager(dataSource);
+    }
+
+    /**
      * SqlSessionTemplate
-     * 对应第一数据源
+     * 对应第二数据源
      * @param sqlSessionFactory
      * @return
      */

@@ -13,6 +13,7 @@ import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.context.annotation.Primary;
 import org.springframework.core.io.support.PathMatchingResourcePatternResolver;
+import org.springframework.jdbc.datasource.DataSourceTransactionManager;
 
 import javax.sql.DataSource;
 
@@ -23,7 +24,7 @@ import javax.sql.DataSource;
  * date 2019/11/19
  */
 @Configuration
-@MapperScan(basePackages = "com.qishao.api.dao.primary", sqlSessionFactoryRef = "primarySqlSessionFactory")
+@MapperScan(basePackages = "com.qishao.api.dao.primary", sqlSessionTemplateRef = "primarySqlSessionTemplate")
 @Slf4j
 public class DataSourcePrimaryConfig {
 
@@ -58,6 +59,17 @@ public class DataSourcePrimaryConfig {
         sqlSessionFactoryBean.setDataSource(dataSource);
         sqlSessionFactoryBean.setMapperLocations(new PathMatchingResourcePatternResolver().getResources(primaryMapperLocationStr));
         return sqlSessionFactoryBean.getObject();
+    }
+
+    /**
+     * 事务管理
+     * 对应第一数据源
+     * @param dataSource
+     * @return
+     */
+    @Bean
+    public DataSourceTransactionManager primaryTransactionManager(@Qualifier("primaryDataSource") DataSource dataSource) {
+        return new DataSourceTransactionManager(dataSource);
     }
 
     /**

@@ -5,5 +5,5 @@
 
 ### 注意事项
 
-- 多数据源的@MapperScan注解，需要分别对应各自的SqlSessionFactory
+- 多数据源的@MapperScan注解，需要分别对应各自的SqlSessionTemplate
 - Primary的DataSource可依赖druid-starter（不手写），但其他数据源的各项配置和Bean一定要注意名称区分
